@@ -296,6 +296,10 @@ module Homebrew
         default_text: 'The "Beer Mug" emoji.',
         default:      "🍺",
       },
+      HOMEBREW_LIVECHECK_AUTOBUMP:               {
+        description: "If set, `brew livecheck` will include data for packages that are autobumped by BrewTestBot.",
+        boolean:     true,
+      },
       HOMEBREW_LIVECHECK_WATCHLIST:              {
         description:  "Consult this file for the list of formulae to check by default when no formula argument " \
                       "is passed to `brew livecheck`.",
@@ -527,9 +531,8 @@ module Homebrew
 
           falsy_values = %w[false no off nil 0]
           if falsy_values.include?(env_value&.downcase)
-            odeprecated "#{env}=#{env_value}", <<~EOS
-              If you wish to enable #{env}, #{env}=1
-              If you wish to disable #{env}, #{env}=
+            odeprecated "#{env}=#{env_value}", <<~EOS.chomp
+              #{env}=1 to enable and #{env}= (an empty value) to disable
             EOS
           end
 
